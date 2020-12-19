@@ -1,27 +1,29 @@
 <template>
   <div class="extra-feature-container">
     <form @submit.prevent="submit">
-      <div class="title">
-        <span>Feature Title</span>
-        <input
-          required
-          v-bind:class="{ 'has-error': isTitleError }"
-          
-          type="text"
-          v-model="title"
-        />
+      <div class="input-container">
+        <div class="title">
+          <v-text-field
+            required
+            :rules="validationRules"
+            label="Feautre Title"
+            type="text"
+            v-model="title"
+          />
+        </div>
+        <div v-if="includePrice" class="price">
+          <v-text-field
+            required
+            label="Feature Price"
+            type="number"
+            v-model="price"
+          />
+        </div>
       </div>
-      <div v-if="includePrice" class="price">
-        <span>Price</span>
-        <input
-          required
-          v-bind:class="{ 'has-error': isPriceError }"
-          
-          type="number"
-          v-model="price"
-        />
+      <div class="action-container">
+        <v-btn elevation="2" @click="submit" color="primary">Add Feature</v-btn>
+        
       </div>
-      <button @click="submit">Submit</button>
     </form>
   </div>
 </template>
@@ -35,25 +37,23 @@ export default {
     return {
       title: "",
       price: 0,
-      isTitleError: false,
-      isPriceError: false,
+      validationRules: [(value) => !!value || "Required."],
     };
   },
   methods: {
     submit() {
-      if (!this.title) return (this.isTitleError = true);
-      if (this.price < 0) return (this.isPriceError = true);
+      if (!this.title) return;
+      if (this.price < 0) return;
       const feature = {
         id: utilService.makeId(),
         title: this.title,
         price: +this.price,
       };
       this.$emit("add-feature", feature);
-      this.isTitleError = false;
       this.title = "";
-      this.isPriceError = false;
       this.price = 0;
     },
+
   },
 };
 </script>
@@ -61,5 +61,19 @@ export default {
 <style lang="scss" scoped>
 .has-error {
   background-color: salmon;
+}
+
+form {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  .input-container {
+    display: flex;
+    flex-grow: 1;
+    gap: 0.5rem;
+    > * {
+      flex-grow: 1;
+    }
+  }
 }
 </style>

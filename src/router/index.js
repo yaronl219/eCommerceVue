@@ -11,20 +11,19 @@ const routes = [
     component: Home
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  },
-  {
     path: '/admin',
     name: 'Store Manager View',
-    component: () => import(/* webpackChunkName: "about" */ '../views/ManagerView/StoreManager.vue')
+    component: () => import('../views/ManagerView/StoreManager.vue'),
+    children: [
+      {
+        path: 'products',
+        name: 'Products',
+        component: () => import('../components/StoreManagerView/ProductManagement/ProductManagement.vue')
+      }
+    ]
   },
   {
-    path: '/add/',
+    path: '/add',
     name: 'Add Product',
     component: () => import(/* webpackChunkName: "about" */ '../views/ManagerView/AddProduct.vue'),
     children: [
@@ -33,7 +32,22 @@ const routes = [
         name: 'Edit Product'
       }
     ]
-  }
+  },
+  {
+    path: '/store/:id',
+    name: 'Item Details',
+    component: () => import('../views/StoreFrontView/StoreItemDetails')
+  },
+  {
+    path: '/store',
+    name: 'Store View',
+    component: () => import('../views/StoreFrontView/StoreFront.vue'),
+  },
+  {
+    path: '/checkout',
+    name: 'Checkout',
+    component: () => import('../views/StoreFrontView/Checkout.vue'),
+  },
 ]
 
 const router = new VueRouter({

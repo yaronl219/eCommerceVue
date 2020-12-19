@@ -1,8 +1,4 @@
-* {
-    box-sizing: border-box;
-}
+@import './base/fonts.scss';
+@import './base/base.scss';
 
-img {
-width: 100%;
-}
-
+@import './cmps/manager-views.scss'

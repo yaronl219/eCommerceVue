@@ -1,14 +1,19 @@
 <template>
   <div class="store-manager-page-container">
-    <product-management></product-management>
+    <manager-sidebar />
+    <v-main>
+    <router-view />
+    </v-main>
   </div>
 </template>
 
 <script>
-import ProductManagement from '../../components/StoreManagerView/ProductManagement/ProductManagement.vue';
+import ManagerSidebar from '../../components/StoreManagerView/ManagerSidebar.vue';
+
 export default {
   components: {
-    ProductManagement
+    ManagerSidebar
+    
   },
   async created() {
       this.loadItems()
@@ -22,4 +27,7 @@ export default {
 </script>
 
 <style>
+.store-manager-page-container {
+  display: flex;
+}
 </style>

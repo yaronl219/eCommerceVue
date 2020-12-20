@@ -1,17 +1,20 @@
 <template>
   <v-main>
-    <cart-refill-prompt :isOpen="isRefillCartModalOpen" @refill-cart="onRefillCart" @forget-order="onForgetOrder" />
+    <cart-refill-prompt
+      :isOpen="isRefillCartModalOpen"
+      @refill-cart="onRefillCart"
+      @forget-order="onForgetOrder"
+    />
     <div class="store-front-container-page">
-      <div
-        class="store-items-container"
-        v-bind:class="{ 'cart-open': isCartOpen }"
-      >
-        <item-preview
-          v-for="item in $store.getters.itemsToDisplay"
-          :key="item._id"
-          :item="item"
+      <category-menu />
+      <div class="category-container">
+        <category-preview
+          v-for="category in $store.getters.storeCategories"
+          :key="category._id"
+          :category="category"
         />
       </div>
+
       <cart-drawer />
     </div>
   </v-main>
@@ -20,13 +23,16 @@
 <script>
 import CartDrawer from "../../components/StoreFrontView/CartCmps/CartDrawer.vue";
 import CartRefillPrompt from "../../components/StoreFrontView/CartCmps/CartRefillPrompt.vue";
-import ItemPreview from "../../components/StoreFrontView/ItemPreview.vue";
+import CategoryMenu from "../../components/StoreFrontView/CategoryCmps/CategoryMenu.vue";
+import CategoryPreview from "../../components/StoreFrontView/CategoryCmps/CategoryPreview.vue";
+
 import { cartService } from "../../services/cartService";
 export default {
   components: {
-    ItemPreview,
     CartDrawer,
     CartRefillPrompt,
+    CategoryPreview,
+    CategoryMenu,
   },
   data() {
     return {
@@ -45,7 +51,7 @@ export default {
     },
     checkIfRefillCart() {
       const savedCart = cartService.getSavedCart();
-      if (!savedCart) return
+      if (!savedCart) return;
       const itemsInCart = [...this.$store.getters.itemsInCart];
       if (savedCart.cartItems.length !== itemsInCart.length) {
         this.isRefillCartModalOpen = true;
@@ -53,15 +59,15 @@ export default {
     },
     onRefillCart() {
       this.$store.dispatch({ type: "refillCart" });
-      this.$store.dispatch({type: 'toggleCartOpen'})
-      this.isRefillCartModalOpen = false
+      this.$store.dispatch({ type: "toggleCartOpen" });
+      this.isRefillCartModalOpen = false;
     },
     onForgetOrder() {
-        console.log('forget')
-        this.$store.dispatch({type: 'emptyCart'})
-        cartService.forgetSavedCart()
-        this.isRefillCartModalOpen = false
-    }
+      console.log("forget");
+      this.$store.dispatch({ type: "emptyCart" });
+      cartService.forgetSavedCart();
+      this.isRefillCartModalOpen = false;
+    },
   },
   computed: {
     isCartOpen() {
@@ -77,12 +83,8 @@ export default {
   transition: 0.2s;
 }
 
-.store-items-container {
-  flex-grow: 1;
-  padding: 0.5rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
-  gap: 0.75rem;
-  transition: 0.2s;
+.category-container {
+    flex-grow: 1;
+flex-direction: column;
 }
 </style>

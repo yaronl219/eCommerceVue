@@ -1,100 +1,107 @@
 <template>
-  <div class="add-product-container">
-    <delete-item-dialog
-      :isOpen="isDeleteItemModalOpen"
-      @close-dialog="isDeleteItemModalOpen = false"
-      @delete-item="onDeleteItem"
-    />
-    <form @submit.prevent="onSaveProduct" enctype="multipart/form-data">
-      <v-card class="left">
-        <v-card-title>Product Details</v-card-title>
-        <v-text-field
-          label="Product Title"
-          id="product-title"
-          v-model="item.title"
-          type="text"
-        />
-        <v-textarea
-          id="product-description"
-          label="Product Descrition"
-          v-model="item.description"
-        />
-        <div class="numbers-container">
+  <v-main>
+    <div class="add-product-container">
+      <delete-item-dialog
+        :isOpen="isDeleteItemModalOpen"
+        @close-dialog="isDeleteItemModalOpen = false"
+        @delete-item="onDeleteItem"
+      />
+      <form @submit.prevent="onSaveProduct" enctype="multipart/form-data">
+        <v-card class="left">
+          <v-card-title>Product Details</v-card-title>
           <v-text-field
-            id="product-price"
-            label="Product Price"
-            v-model="item.basePrice"
-            type="number"
+            label="Product Title"
+            id="product-title"
+            v-model="item.title"
+            type="text"
+            required
           />
-          <v-text-field
-            label="Amount in Stock"
-            id="product-amountInStock"
-            v-model="item.amountInStock"
-            type="url"
+          <v-textarea
+            id="product-description"
+            label="Product Descrition"
+            v-model="item.description"
           />
-        </div>
-
-        <div>
-          <!-- <label for="is-on-sale">Mark as "On Sale"</label> -->
-          <v-checkbox
-            id="is-on-sale"
-            label="Mark as on sale"
-            v-model="item.onSale"
-          />
-        </div>
-      </v-card>
-      <v-card class="right">
-        <v-card-title>Product Image</v-card-title>
-        <div v-if="isUploading">
-          <v-skeleton-loader type="card, article"></v-skeleton-loader>
-        </div>
-        <div v-if="!isUploading" class="img-form">
-          <div class="img-container">
-            <product-image :imgUrl="item.img" />
+          <div class="numbers-container">
+            <v-text-field
+              id="product-price"
+              label="Product Price"
+              v-model="item.basePrice"
+              type="number"
+            />
+            <v-text-field
+              label="Amount in Stock"
+              id="product-amountInStock"
+              v-model="item.amountInStock"
+              type="url"
+            />
           </div>
 
-          <!-- <label for="product-image">Enter an Image URL</label> -->
-          <!-- <input id="product-image" v-model="item.img" type="url" /> -->
-          <v-text-field
-            label="Image Url"
-            placeholder="Enter an image URL"
-            v-model="item.img"
-          />
-          <label for="file">Or upload a file</label>
-          <input
-            type="file"
-            id="file"
-            ref="file"
-            v-on:change="handleFileUpload()"
-          />
-        </div>
-      </v-card>
-    </form>
-    <div class="extras-container">
-      <extra-features-cmp
-        :extras="item.features"
-        @add-feature="addFeature"
-        @delete-feature="onDeleteFeature"
-        :includePrice="false"
-        title="Included Features"
-      />
-      <extra-features-cmp
-        title="Paid Extras"
-        :extras="item.extras"
-        @delete-feature="onDeleteExtra"
-        @add-feature="addExtra"
-        :includePrice="true"
-      />
+          <div>
+            <v-checkbox
+              id="is-on-sale"
+              label="Mark as on sale"
+              v-model="item.onSale"
+            />
+          </div>
+        </v-card>
+        <v-card class="right">
+          <v-card-title>Product Image</v-card-title>
+          <div v-if="isUploading">
+            <v-skeleton-loader type="card, article"></v-skeleton-loader>
+          </div>
+          <div v-if="!isUploading" class="img-form">
+            <div class="img-container">
+              <product-image :imgUrl="item.img" />
+            </div>
+
+            <!-- <label for="product-image">Enter an Image URL</label> -->
+            <!-- <input id="product-image" v-model="item.img" type="url" /> -->
+            <v-text-field
+              label="Image Url"
+              placeholder="Enter an image URL"
+              v-model="item.img"
+            />
+            <label for="file">Or upload a file</label>
+            <input
+              type="file"
+              id="file"
+              ref="file"
+              v-on:change="handleFileUpload()"
+            />
+          </div>
+        </v-card>
+      </form>
+      <div class="extras-container">
+        <extra-features-cmp
+          :extras="item.features"
+          @add-feature="addFeature"
+          @delete-feature="onDeleteFeature"
+          :includePrice="false"
+          title="Included Features"
+        />
+        <extra-features-cmp
+          title="Paid Extras"
+          :extras="item.extras"
+          @delete-feature="onDeleteExtra"
+          @add-feature="addExtra"
+          :includePrice="true"
+        />
+      </div>
+      <div class="action-btns">
+        <v-btn color="success" elevation="2" @click="onSaveProduct"
+          >Save Product</v-btn
+        >
+        <v-btn
+          v-if="isUpdating"
+          elevation="2"
+          @click="onOpenDeleteModal"
+          color="error"
+        >
+          Delete Item
+        </v-btn>
+      </div>
     </div>
-    <div class="action-btns">
-      <v-btn color="success" elevation="2" @click="onSaveProduct"
-        >Save Product</v-btn
-      >
-      <v-btn elevation="2" @click="onOpenDeleteModal" color="error"
-        >Delete Item</v-btn
-      >
-    </div>
-  </div>
+  </v-main>
 </template>
 
 <script>
@@ -115,6 +122,7 @@ export default {
         onSale: false,
         features: [],
         extras: [],
+        parentCategory: null,
       },
       file: "",
       isUploading: false,
@@ -123,20 +131,24 @@ export default {
   },
   computed: {
     isUpdating() {
-      const { id } = this.$route.params;
-      return !!id;
+      const { editid } = this.$route.query;
+      return !!editid;
     },
   },
   async created() {
-    const { id } = this.$route.params;
-    if (id) {
+    const { editid, categoryid } = this.$route.query;
+    if (!editid && !categoryid) return this.$router.push("/admin/products");
+    if (editid) {
       try {
-        const item = await itemService.getItem(this.$route.params.id);
+        const item = await itemService.getItem(editid);
         if (!item) return;
         this.item = item;
       } catch (err) {
         console.log(err, "error fetching item. reverting to adding new item");
       }
+    }
+    if (categoryid) {
+      this.item.parentCategory = categoryid;
     }
   },
   methods: {
@@ -147,11 +159,13 @@ export default {
       this.item.extras.push(extra);
     },
     async onSaveProduct() {
+      if (!this.item.title) return;
       if (this.isUpdating) {
         this.item._id = this.$route.params.id;
         await this.$store.dispatch({ type: "updateItem", item: this.item });
       } else {
-        await this.$store.dispatch({ type: "addItem", item: this.item });
+        if (!this.item.parentCategory) return
+          await this.$store.dispatch({ type: "addItem", item: this.item });
       }
       this.onExitAddItem();
     },
@@ -171,11 +185,15 @@ export default {
       this.isDeleteItemModalOpen = true;
     },
     onDeleteFeature(featureId) {
-        console.log(featureId,this.item.features)
-      this.item.features = this.item.features.filter((feature) => feature.id !== featureId);
+      console.log(featureId, this.item.features);
+      this.item.features = this.item.features.filter(
+        (feature) => feature.id !== featureId
+      );
     },
     onDeleteExtra(featureId) {
-      this.item.extras = this.item.extras.filter((feature) => feature.id !== featureId);
+      this.item.extras = this.item.extras.filter(
+        (feature) => feature.id !== featureId
+      );
     },
     async onDeleteItem() {
       const { id } = this.$route.params;
@@ -235,11 +253,11 @@ form {
 }
 
 .action-btns {
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: flex-end;
-    >* {
-        margin: 0 0.25rem;
-    }
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-end;
+  > * {
+    margin: 0 0.25rem;
+  }
 }
 </style>

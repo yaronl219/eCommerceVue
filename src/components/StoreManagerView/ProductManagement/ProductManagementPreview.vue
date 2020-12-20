@@ -2,6 +2,7 @@
   <v-card class="product-management-preview">
     <delete-item-dialog
       :isOpen="isDeleteItemModalOpen"
+      :isItem="true"
       @close-dialog="isDeleteItemModalOpen = false"
       @delete-item="onDeleteItem"
     ></delete-item-dialog>
@@ -42,7 +43,7 @@ export default {
   },
   methods: {
     onClickEdit() {
-      this.$router.push(`/add/${this.item._id}`);
+      this.$router.push(`/add?editid=${this.item._id}`);
     },
     onClickDeleteItem() {
       this.isDeleteItemModalOpen = true;

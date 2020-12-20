@@ -6,7 +6,9 @@ export const itemService = {
     getItem,
     updateItem,
     removeItem,
-    uploadImg
+    uploadImg,
+    getCategories,
+    reOrderItems
 }
 
 async function addItem(item) {
@@ -18,10 +20,19 @@ async function addItem(item) {
     }
 }
 
+async function reOrderItems(fromIndex,futureIndex,categoryId) {
+    try {
+        const res = await httpService.put('item/reorder',{fromIndex,futureIndex,categoryId})
+        return res
+    } catch (err) {
+        console.log(err)
+    }
+}
+
 async function getItems() {
     try {
-        const items = await httpService.get('item')
-        return items
+        const { items, categories } = await httpService.get('item')
+        return {items, categories}
     } catch (err) {
         console.log(err)
     }
@@ -39,7 +50,7 @@ async function getItem(itemId) {
 
 async function updateItem(item) {
     try {
-        const updatedItem = await httpService.put('item',item)
+        const updatedItem = await httpService.put('item', item)
         return updatedItem
     } catch (err) {
         console.log(err)
@@ -58,10 +69,19 @@ async function removeItem(itemId) {
 async function uploadImg(image) {
     console.log(image)
     try {
-        const res = await httpService.postFormData('img',image)
+        const res = await httpService.postFormData('img', image)
         return res
     } catch (err) {
         console.log(err)
     }
-    
+
+}
+
+async function getCategories() {
+    try {
+        const items = await httpService.get('category')
+        return items
+    } catch (err) {
+        console.log(err)
+    }
 }

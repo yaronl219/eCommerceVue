@@ -1,37 +1,22 @@
 <template>
   <div class="product-management-view-container management-main-view">
-    <text-filter @filter-by="onFilterBy" />
+    <text-filter />
     <div class="items-container">
-      <product-management-preview
-        v-for="item in itemsToDisplay"
-        :key="item._id"
-        :item="item"
-      />
-    </div>
-    <div class="add-item-container">
-      <v-btn color="primary" @click="onClickAddItem">Add Product</v-btn>
+        <product-categoris-container />
     </div>
   </div>
 </template>
 
 <script>
-import ProductManagementPreview from "./ProductManagementPreview.vue";
-import TextFilter from "../../GlobalCmps/TextFilter";
+
+import TextFilter from "./TextFilter";
+import ProductCategorisContainer from './ProductCategorisContainer.vue';
 
 export default {
-  components: { ProductManagementPreview, TextFilter },
+  components: { TextFilter, ProductCategorisContainer },
   computed: {
     itemsToDisplay() {
       return this.$store.getters.itemsToDisplay;
-    },
-  },
-  methods: {
-    onFilterBy(filterBy) {
-      console.log(filterBy);
-      this.$store.dispatch({ type: "filterItems", filterBy });
-    },
-    onClickAddItem() {
-      this.$router.push("/add");
     },
   },
 };
@@ -42,9 +27,5 @@ export default {
   padding: 0.5rem;
 }
 
-.add-item-container {
-    display: flex;
-    padding: 0.5rem;
-    flex-direction: row-reverse;
-}
+
 </style>

@@ -33,6 +33,7 @@
       >
       </v-text-field>
     </v-form>
+    <small>Your credit card information will not be stored anywhere</small>
   </div>
 </template>
 
@@ -59,6 +60,15 @@ export default {
       ],
       cvvLength: 3,
     };
+  },
+    created() {
+      const {paymentDetails} =  this.$store.getters
+      if (paymentDetails && paymentDetails.type === 'CC') {
+          this.ccNumber = paymentDetails.ccNumber
+          this.expMonth = paymentDetails.expMonth
+          this.expYear = paymentDetails.expYear
+          this.cvv = paymentDetails.cvv
+      }
   },
   methods: {
     onValidation() {

@@ -13,6 +13,7 @@ async function sendOrder(order) {
     return orderId
 }
 
+
 function _hideCCDetails(ccDetails) {
     const ccLength = ccDetails.ccNumber.length
     const ccNumArr = ccDetails.ccNumber.split('')

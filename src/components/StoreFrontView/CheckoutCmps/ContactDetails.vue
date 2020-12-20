@@ -55,6 +55,14 @@ export default {
       ],
     }
   },
+  created() {
+    const {contactDetails} = this.$store.getters
+    if (contactDetails) {
+      this.contactName = contactDetails.contactName
+      this.phoneNumber = contactDetails.phoneNumber
+      this.email = contactDetails.email
+    }
+  },
   methods: {
     onValidation() {
       if (![this.contactName,this.phoneNumber,this.email].every(v => v)) return
@@ -65,6 +73,8 @@ export default {
         phoneNumber: this.phoneNumber,
         email: this.email
       }
+      console.log(contactDetails)
+      this.$store.dispatch({type: 'setContactDetails',contactDetails})
       this.$emit('contact-details',contactDetails)
     }
   }

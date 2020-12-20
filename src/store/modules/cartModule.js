@@ -1,10 +1,10 @@
-import { checkoutService } from "../../services/checkoutService";
+import { cartService } from "../../services/cartService";
 
 export default {
     state: {
         itemsInCart: [],
         isCartOpen: false,
-        orderId: null
+
     },
     getters: {
         itemsInCart(state) {
@@ -19,11 +19,12 @@ export default {
         totalSum(state) {
             let totalSum = 0;
             state.itemsInCart.forEach((item) => {
-              let sum = item.price * item.amount;
-              totalSum += sum;
+                let sum = item.price * item.amount;
+                totalSum += sum;
             });
             return totalSum;
-          },
+        },
+
     },
     mutations: {
         addItemToCart(state, action) {
@@ -36,11 +37,13 @@ export default {
             }
             state.itemsInCart = items
             state.isCartOpen = true
+            cartService.saveCart(items)
         },
         removeItemFromCart(state, { itemId }) {
             let items = [...state.itemsInCart]
             items = items.filter(item => item.cartId !== itemId)
             state.itemsInCart = items
+            cartService.saveCart(items)
         },
         toggleCartOpen(state) {
             state.isCartOpen = !state.isCartOpen
@@ -54,10 +57,15 @@ export default {
             const item = items.find(currItem => currItem.cartId === itemId)
             item.amount = amount
             state.itemsInCart = items
+            cartService.saveCart(items)
         },
-        setOrderId(state, {orderId}) {
-            state.orderId = orderId
+        refillCart(state,{cartItems}) {
+            state.itemsInCart = cartItems
+        },
+        emptyCart(state) {
+            state.itemsInCart = []
         }
+
 
     },
     actions: {
@@ -79,10 +87,15 @@ export default {
                 context.commit({ type: 'removeItemFromCart', itemId })
             }
         },
-        async sendOrder(context,{order}) {
-            const orderId = await checkoutService.sendOrder(order)
-            context.commit({type: 'setOrderId', orderId})
+        refillCart(context) {
+            const {cartItems} = cartService.getSavedCart()
+            if (!cartItems) return
+            context.commit({ type: 'refillCart', cartItems })
+        },
+        emptyCart(context) {
+            context.commit({type:'emptyCart'})
         }
+
 
     }
 }

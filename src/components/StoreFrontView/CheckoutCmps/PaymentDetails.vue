@@ -48,12 +48,13 @@ export default {
       return !this.paymentOption;
     },
   },
+
   methods: {
     onVerifiedPayment(creditCard) {
       if (this.isCreditCard) {
         const paymentOption = creditCard;
         paymentOption.type = "CC";
-        this.$emit("payment-details", paymentOption);
+        this.onReceivePayment(paymentOption)
       }
     },
     onSwitchPaymentOption() {
@@ -63,7 +64,26 @@ export default {
       } else {
         paymentOption.type = "Cash";
       }
-      this.$emit("payment-details", paymentOption);
+      this.onReceivePayment(paymentOption)
+    },
+    onReceivePayment(paymentOption) {
+        console.log(paymentOption)
+      if (paymentOption.type === "Cash") {
+        this.$store.dispatch({type:'setPaymentDetails', paymentDetails: paymentOption})
+      } else {
+        if (
+          paymentOption.ccNumber &&
+          paymentOption.expMonth &&
+          paymentOption.expYear &&
+          paymentOption.cvv
+          
+        ) {
+            console.log('g')
+          this.$store.dispatch({type:'setPaymentDetails', paymentDetails: paymentOption})
+        } else {
+          this.$store.dispatch({type:'setPaymentDetails', paymentDetails :null})
+        }
+      }
     },
   },
 };
@@ -71,8 +91,8 @@ export default {
 
 <style lang="scss" scoped>
 .payment-toggle-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 </style>

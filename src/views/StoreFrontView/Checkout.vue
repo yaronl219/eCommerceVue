@@ -3,14 +3,22 @@
     <div class="checkout-screen-container">
       <div class="layout-container">
         <div class="left">
-          <contact-details @contact-details="updateContactDetails" />
-          <payment-details @payment-details="onReceivePayment" />
+          <contact-details />
+          <shipping-details />
+          <payment-details />
           <div class="checkout-btn-container">
             <v-btn
               color="success"
               :disabled="!isOrderValid"
               @click="onCompleteCheckout"
-              >Complete Checkout ${{ $store.getters.totalSum }}</v-btn
+              >
+              <div v-if="isOrderValid">
+                  Complete Checkout ${{ $store.getters.totalSum }}
+              </div>
+              <div v-if="!isOrderValid">
+                  Please fill all forms
+              </div>
+              </v-btn
             >
           </div>
         </div>
@@ -28,54 +36,40 @@
 import CartContainer from "../../components/StoreFrontView/CartCmps/CartContainer.vue";
 import ContactDetails from "../../components/StoreFrontView/CheckoutCmps/ContactDetails.vue";
 import PaymentDetails from "../../components/StoreFrontView/CheckoutCmps/PaymentDetails.vue";
+import ShippingDetails from '../../components/StoreFrontView/CheckoutCmps/ShippingDetails.vue';
 
 export default {
   components: {
     ContactDetails,
     PaymentDetails,
     CartContainer,
+    ShippingDetails
   },
   data() {
     return {
-      order: {
-        contactDetails: null,
-        paymentDetails: null,
-      },
     };
   },
   computed: {
     isOrderValid() {
       return (
-        !!this.order.contactDetails &&
-        !!this.order.paymentDetails &&
-        !!this.$store.getters.totalSum
+        !!this.$store.getters.contactDetails &&
+        !!this.$store.getters.paymentDetails &&
+        !!this.$store.getters.totalSum && 
+        !!this.$store.getters.shippingDetails
       );
     },
   },
   methods: {
-    updateContactDetails(contactDetails) {
-      this.order.contactDetails = contactDetails;
-    },
-    onReceivePayment(paymentOption) {
-      console.log(paymentOption.type);
-      if (paymentOption.type === "Cash") {
-        this.order.paymentDetails = paymentOption;
-      } else {
-        if (
-          paymentOption.ccNumber &&
-          paymentOption.expMonth &&
-          paymentOption.expYear &&
-          paymentOption.cvv
-        ) {
-          this.order.paymentDetails = paymentOption;
-        } else {
-          this.order.paymentDetails = null;
-        }
-      }
-    },
+
     onCompleteCheckout() {
-      this.order.items = [...this.$store.getters.itemsInCart];
-      this.$store.dispatch({ type: "sendOrder", order: this.order });
+        const order = {
+            items : [...this.$store.getters.itemsInCart],
+            contactDetails : this.$store.getters.contactDetails,
+            paymentDetails: this.$store.getters.paymentDetails,
+            shippingDetails: this.$store.getters.shippingDetails
+        }
+    
+      this.$store.dispatch({ type: "sendOrder", order });
     },
   },
 };

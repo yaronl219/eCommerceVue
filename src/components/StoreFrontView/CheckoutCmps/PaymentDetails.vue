@@ -67,7 +67,6 @@ export default {
       this.onReceivePayment(paymentOption)
     },
     onReceivePayment(paymentOption) {
-        console.log(paymentOption)
       if (paymentOption.type === "Cash") {
         this.$store.dispatch({type:'setPaymentDetails', paymentDetails: paymentOption})
       } else {

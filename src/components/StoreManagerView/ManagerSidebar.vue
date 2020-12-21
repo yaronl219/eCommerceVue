@@ -8,8 +8,10 @@
       clipped
     >
     
-      <v-list-item class="px-2">
-          <v-icon>mdi-menu</v-icon>
+      <v-list-item>
+
+    
+          <v-icon >mdi-menu</v-icon>
         <v-btn
           icon
           @click.stop="mini = !mini"

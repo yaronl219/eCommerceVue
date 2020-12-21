@@ -35,7 +35,7 @@ export default {
   padding: 0.5rem;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
-  gap: 0.75rem;
+  gap: 1.25rem;
   transition: 0.2s;
 }
 </style>

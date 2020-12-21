@@ -70,6 +70,8 @@ export default {
         }
     
       this.$store.dispatch({ type: "sendOrder", order });
+      console.log('now push')
+      this.$router.push('/complete')
     },
   },
 };

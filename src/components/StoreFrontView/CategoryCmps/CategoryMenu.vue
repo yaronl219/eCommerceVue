@@ -1,27 +1,21 @@
 <template>
-  <div class="category-menu">
-    <v-navigation-drawer
-      :value="true"
-      app
-      permanent
-      clipped
-      width="200px"
+  <div class="inner-container">
+    <ul
+      v-if="$store.getters.renderedCategoriesLength"
+      v-bind:class="{ horizontal: !isVertical }"
+      v-bind:style="{ width: windowWidth - 40 + 'px' }"
     >
-      <div class="inner-container">
-        <ul v-if="$store.getters.renderedCategoriesLength">
-          <li
-            v-for="category of categories"
-            :key="category._id"
-            v-scroll-to="{
-              el: 'body',
-              offset: $store.getters.categoryPosById(category._id),
-            }"
-          >
-            <v-list-item>{{ category.title }}</v-list-item>
-          </li>
-        </ul>
-      </div>
-    </v-navigation-drawer>
+      <li
+        v-for="category of categories"
+        :key="category._id"
+        v-scroll-to="{
+          el: 'body',
+          offset: $store.getters.categoryPosById(category._id),
+        }"
+      >
+        {{ category.title }}
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -31,6 +25,7 @@ var VueScrollTo = require("vue-scrollto");
 Vue.use(VueScrollTo);
 
 export default {
+  props: ["isVertical", "windowWidth"],
   computed: {
     categories() {
       return this.$store.getters.storeCategories;
@@ -44,19 +39,25 @@ export default {
 @media screen and (min-width: 600px) {
   .category-menu {
     position: relative;
-    // width: 250px;
-  }
-
-  .inner-container {
-    // position: fixed;
   }
 }
-
 ul {
-    list-style: none;
+  list-style: none;
+}
+
+.horizontal {
+  margin: 0px;
+  padding: 0px;
+  overflow-x: scroll;
+  display: flex;
+  padding: 1rem;
+  li {
+    margin-right: 2rem;
+  }
 }
 
 li {
-    cursor: pointer;
+  cursor: pointer;
+  margin: 1.5rem 0rem;
 }
 </style>

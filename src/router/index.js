@@ -5,11 +5,7 @@ import Home from '../views/Home.vue'
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
+
   {
     path: '/admin',
     name: 'Store Manager View',
@@ -17,9 +13,20 @@ const routes = [
     children: [
       {
         path: 'products',
+        alias: '/',
         name: 'Products',
         component: () => import('../components/StoreManagerView/ProductManagement/ProductManagement.vue')
-      }
+      },
+      {
+        path: 'orders',
+        name: 'Orders',
+        component: () => import('../components/StoreManagerView/OrdersCmps/OrderPreviewContainer.vue')
+      },
+      {
+        path: 'graphs',
+        name: 'Graphs',
+        component: () => import('../components/StoreManagerView/Graphs/GraphContainer.vue')
+      },
     ]
   },
   {
@@ -47,6 +54,16 @@ const routes = [
     path: '/checkout',
     name: 'Checkout',
     component: () => import('../views/StoreFrontView/Checkout.vue'),
+  },
+  {
+    path: '/complete',
+    name: 'Complete',
+    component: () => import('../views/StoreFrontView/OrderComplete.vue'),
+  },
+  {
+    path: '*',
+    name: 'Home',
+    component: Home
   },
 ]
 

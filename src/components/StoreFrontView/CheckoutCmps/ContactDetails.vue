@@ -73,7 +73,6 @@ export default {
         phoneNumber: this.phoneNumber,
         email: this.email
       }
-      console.log(contactDetails)
       this.$store.dispatch({type: 'setContactDetails',contactDetails})
       this.$emit('contact-details',contactDetails)
     }

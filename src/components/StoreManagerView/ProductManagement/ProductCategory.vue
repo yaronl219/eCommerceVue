@@ -1,5 +1,5 @@
 <template>
-  <v-expansion-panel-content>
+  <v-expansion-panel-content class="expansion-panel">
     <draggable :v-model="items" @end="(ev) => onMove(ev)">
       <product-management-preview
         v-for="item in items"
@@ -25,17 +25,6 @@ export default {
           return this.$store.getters.itemsByCategory(this.category._id)
       }
   },
-//   data() {
-//     return {
-//       items: null,
-//     };
-//   },
-//   created() {
-//     this.sortDisplay();
-//   },
-//   watch: {
-//       this.$store.getters.itemsByCategory(this.category._id):
-//   },
   methods: {
     onMove(dragEvent) {
       const fromIndex = dragEvent.oldIndex;
@@ -68,5 +57,15 @@ export default {
     display: flex;
     padding: 0.5rem;
     flex-direction: row-reverse;
+}
+
+.product-management-preview {
+    margin-bottom: 0.25rem;
+}
+
+@media screen and (max-width:600px){
+    .expansion-panel {
+        // padding: -0.5rem;
+    }
 }
 </style>

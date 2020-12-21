@@ -15,14 +15,6 @@ export default {
     ManagerSidebar
     
   },
-  async created() {
-      this.loadItems()
-  },
-  methods: {
-    async loadItems() {
-      this.$store.dispatch({ type: "loadItems" });
-    },
-  },
 };
 </script>
 

@@ -8,7 +8,7 @@ export default {
         storeItems: null,
         storeCategories: null,
         filterItems: '',
-        storeCategoriesDomPos: []
+        
     },
     getters: {
         itemsToDisplay(state) {
@@ -78,7 +78,8 @@ export default {
         removeCategory(state,{categoryId}) {
             const categories = [...state.storeCategories]
             state.storeCategories = categories.filter(category => category._id !== categoryId)
-        }
+        },
+        
     },
     actions: {
         async addItem(context, action) {
@@ -137,9 +138,7 @@ export default {
             context.commit({type: 'removeCategory', categoryId})
             await categoryService.removeCategory(categoryId)
         },
-        setPosition(context,{categoryId,yPos}) {
-            context.commit({type:'setPosition',categoryId,yPos} )
-        }
+
 
     }
 }

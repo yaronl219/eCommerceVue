@@ -70,5 +70,9 @@ export default {
     justify-content: space-around;
 }
 
-
+@media screen and (max-width:600px){
+    .product-stock {
+        display: none;
+    }
+}
 </style>

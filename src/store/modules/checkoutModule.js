@@ -33,6 +33,12 @@ export default {
         },
         setPaymentDetails(state, {paymentDetails}) {
             state.paymentDetails = paymentDetails
+        },
+        resetDetails(state) {
+            state.orderId = null
+            state.shippingDetails = null
+            state.contactDetails = null
+            state.paymentDetails = null
         }
     },
     actions: {
@@ -41,7 +47,6 @@ export default {
             context.commit({type: 'setOrderId', orderId})
         },
         setShippingDetails(context,{shippingDetails}) {
-            console.log('ggg')
             context.commit({type: 'setShippingDetails', shippingDetails})
         },
         setContactDetails(context,{contactDetails}) {
@@ -49,6 +54,9 @@ export default {
         },
         setPaymentDetails(context, {paymentDetails}) {
             context.commit({type:'setPaymentDetails', paymentDetails})
+        },
+        resetDetails(context) {
+            context.commit({type:'resetDetails'})
         }
     }
 }

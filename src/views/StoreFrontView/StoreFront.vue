@@ -6,7 +6,7 @@
       @forget-order="onForgetOrder"
     />
     <div class="store-front-container-page">
-      <category-menu />
+      <category-menu-container />
       <div class="category-container">
         <category-preview
           v-for="category in $store.getters.storeCategories"
@@ -23,7 +23,7 @@
 <script>
 import CartDrawer from "../../components/StoreFrontView/CartCmps/CartDrawer.vue";
 import CartRefillPrompt from "../../components/StoreFrontView/CartCmps/CartRefillPrompt.vue";
-import CategoryMenu from "../../components/StoreFrontView/CategoryCmps/CategoryMenu.vue";
+import CategoryMenuContainer from "../../components/StoreFrontView/CategoryCmps/CategoryMenuContainer.vue";
 import CategoryPreview from "../../components/StoreFrontView/CategoryCmps/CategoryPreview.vue";
 
 import { cartService } from "../../services/cartService";
@@ -32,7 +32,7 @@ export default {
     CartDrawer,
     CartRefillPrompt,
     CategoryPreview,
-    CategoryMenu,
+    CategoryMenuContainer,
   },
   data() {
     return {
@@ -79,12 +79,19 @@ export default {
 
 <style lang="scss" scoped>
 .store-front-container-page {
-  display: flex;
   transition: 0.2s;
 }
 
 .category-container {
-    flex-grow: 1;
-flex-direction: column;
+  flex-grow: 1;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+@media screen and (max-width: 600px){
+    .category-container {
+        
+        padding: 2rem 0.5rem;
+    }
 }
 </style>

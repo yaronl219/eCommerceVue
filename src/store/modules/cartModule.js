@@ -93,6 +93,7 @@ export default {
             context.commit({ type: 'refillCart', cartItems })
         },
         emptyCart(context) {
+            cartService.forgetSavedCart()
             context.commit({type:'emptyCart'})
         }
 

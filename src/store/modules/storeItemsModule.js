@@ -79,6 +79,15 @@ export default {
             const categories = [...state.storeCategories]
             state.storeCategories = categories.filter(category => category._id !== categoryId)
         },
+        async updateItem(state,{item}) {
+            let items = state.storeItems
+            if (!items) items = await itemService.getItems()
+
+            items = items.map(currItem => {
+                if (currItem._id === item._id) return item
+                return currItem
+            })
+        }
         
     },
     actions: {
@@ -99,14 +108,8 @@ export default {
             itemService.removeItem(action.itemId)
         },
         async updateItem(context, action) {
-            let items = this.getters.itemsToDisplay
-            if (!this.getters.itemsToDisplay) items = await itemService.getItems()
 
-            items = items.map(currItem => {
-                if (currItem._id === action.item._id) return action.item
-                return currItem
-            })
-            context.commit({ type: 'setItems', items })
+            context.commit({ type: 'updateItem', item:action.item })
             itemService.updateItem(action.item)
         },
         async loadItems(context) {

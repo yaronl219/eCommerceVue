@@ -40,10 +40,12 @@ export default {
 .img-container {
   height: 15rem;
 }
+
 .top {
   display: flex;
   .title {
       flex-grow: 1;
+      word-break: normal !important;
   }
 }
 </style>

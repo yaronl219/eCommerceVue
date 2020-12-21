@@ -63,8 +63,8 @@ async function put(url, dataToPost) {
             },
             body: JSON.stringify(dataToPost)
         })
-        // const data = await res.json()
-        return res
+        const data = await res.json()
+        return data
     } catch (err) {
         console.log(err)
     }

@@ -161,7 +161,7 @@ export default {
     async onSaveProduct() {
       if (!this.item.title) return;
       if (this.isUpdating) {
-        this.item._id = this.$route.params.id;
+        this.item._id = this.$route.query.editid;
         await this.$store.dispatch({ type: "updateItem", item: this.item });
       } else {
         if (!this.item.parentCategory) return

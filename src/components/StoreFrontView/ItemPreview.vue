@@ -7,31 +7,39 @@
       <div class="title">
         <v-card-title>{{ item.title }}</v-card-title>
       </div>
-      <v-card-title>${{ item.basePrice }}</v-card-title>
+      <v-card-title>
+        <price-container :price="item.basePrice" />
+      </v-card-title>
     </div>
     <div class="bottom">
-        <v-card-text>
-            {{item.description}}
-        </v-card-text>
+      <v-card-text>
+        {{ shortDescription }}
+      </v-card-text>
     </div>
   </v-card>
 </template>
 
 <script>
+import PriceContainer from "../GlobalCmps/PriceContainer.vue";
 import ProductImage from "../GlobalCmps/ProductImage.vue";
 
 export default {
-  components: { ProductImage },
+  components: { ProductImage, PriceContainer },
   props: ["item"],
+  computed: {
+    shortDescription() {
+      let { description } = this.item;
+      if (description.length < 100) return description;
+      return `${description.substring(0, 97)}...`;
+    },
+  },
   methods: {
-      onClickItem() {
-          this.$router.push(`/store/${this.item._id}`)
-      }
+    onClickItem() {
+      this.$router.push(`/store/${this.item._id}`);
+    },
   },
   data() {
-      return {
-
-      }
+    return {};
   },
 };
 </script>
@@ -44,8 +52,7 @@ export default {
 .top {
   display: flex;
   .title {
-      flex-grow: 1;
-      word-break: normal !important;
+    flex-grow: 1;
   }
 }
 </style>

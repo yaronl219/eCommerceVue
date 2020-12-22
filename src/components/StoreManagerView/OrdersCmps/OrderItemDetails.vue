@@ -16,7 +16,7 @@
             <td class="idx">{{ item.index }}</td>
             <td class="table-title">{{ item.title }}</td>
             <td class="amount">{{ item.amount }}</td>
-            <td class="price">${{ item.price }}</td>
+            <td class="price"><price-container :price="item.price" /></td>
           </tr>
         </tbody>
       </template>
@@ -26,7 +26,9 @@
 
 <script>
 import { utilService } from '../../../services/utilService';
+import PriceContainer from '../../GlobalCmps/PriceContainer.vue';
 export default {
+  components: { PriceContainer },
   props: ["order"],
   computed: {
     orderItems() {

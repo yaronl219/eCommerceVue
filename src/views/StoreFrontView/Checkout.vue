@@ -11,15 +11,13 @@
               color="success"
               :disabled="!isOrderValid"
               @click="onCompleteCheckout"
-              >
-              <div v-if="isOrderValid">
-                  Complete Checkout ${{ $store.getters.totalSum }}
-              </div>
-              <div v-if="!isOrderValid">
-                  Please fill all forms
-              </div>
-              </v-btn
             >
+              <div v-if="isOrderValid">
+                Complete Checkout
+                <price-container :price="$store.getters.totalSum" />
+              </div>
+              <div v-if="!isOrderValid">Please fill all forms</div>
+            </v-btn>
           </div>
         </div>
         <div class="right">
@@ -33,45 +31,42 @@
 </template>
 
 <script>
+import PriceContainer from "../../components/GlobalCmps/PriceContainer.vue";
 import CartContainer from "../../components/StoreFrontView/CartCmps/CartContainer.vue";
 import ContactDetails from "../../components/StoreFrontView/CheckoutCmps/ContactDetails.vue";
 import PaymentDetails from "../../components/StoreFrontView/CheckoutCmps/PaymentDetails.vue";
-import ShippingDetails from '../../components/StoreFrontView/CheckoutCmps/ShippingDetails.vue';
+import ShippingDetails from "../../components/StoreFrontView/CheckoutCmps/ShippingDetails.vue";
 
 export default {
   components: {
     ContactDetails,
     PaymentDetails,
     CartContainer,
-    ShippingDetails
-  },
-  data() {
-    return {
-    };
+    ShippingDetails,
+    PriceContainer,
   },
   computed: {
     isOrderValid() {
       return (
         !!this.$store.getters.contactDetails &&
         !!this.$store.getters.paymentDetails &&
-        !!this.$store.getters.totalSum && 
+        !!this.$store.getters.totalSum &&
         !!this.$store.getters.shippingDetails
       );
     },
   },
   methods: {
-
     onCompleteCheckout() {
-        const order = {
-            items : [...this.$store.getters.itemsInCart],
-            contactDetails : this.$store.getters.contactDetails,
-            paymentDetails: this.$store.getters.paymentDetails,
-            shippingDetails: this.$store.getters.shippingDetails
-        }
-    
+      const order = {
+        items: [...this.$store.getters.itemsInCart],
+        contactDetails: this.$store.getters.contactDetails,
+        paymentDetails: this.$store.getters.paymentDetails,
+        shippingDetails: this.$store.getters.shippingDetails,
+      };
+
+      this.$store.dispatch({ type: "toggleCartOpen" });
       this.$store.dispatch({ type: "sendOrder", order });
-      console.log('now push')
-      this.$router.push('/complete')
+      this.$router.push("/complete");
     },
   },
 };

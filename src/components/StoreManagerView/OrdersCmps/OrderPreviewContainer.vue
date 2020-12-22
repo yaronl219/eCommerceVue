@@ -1,5 +1,7 @@
 <template>
   <div class="order-preview-list-container">
+    <v-card-title>Received Orders</v-card-title>
+    <order-filter-container @update-filter="onUpdateQuery" />
     <div v-if="isLoading" class="loader">
       <v-progress-circular
         :size="70"
@@ -8,21 +10,22 @@
         indeterminate
       ></v-progress-circular>
     </div>
-    
-      <div v-if="!isLoading" class="orders-preview-container">
-          <v-card-title>Received Orders</v-card-title>
-        <v-expansion-panels>
-          <v-expansion-panel v-for="order in orders" :key="order._id">
-            <v-expansion-panel-header>
-              <order-preview :order="order" />
-            </v-expansion-panel-header>
-            <v-expansion-panel-content>
-                <order-details :order="order"/>
-            </v-expansion-panel-content>
-          </v-expansion-panel>
-        </v-expansion-panels>
-      </div>
-    
+
+    <div v-if="!isLoading" class="orders-preview-container">
+      
+      
+      <v-expansion-panels>
+        <v-expansion-panel v-for="order in orders" :key="order._id">
+          <v-expansion-panel-header>
+            <order-preview :order="order" />
+          </v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <order-details :order="order" />
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
+    </div>
+
     <v-footer app>
       <div class="pagination-container">
         <v-pagination
@@ -38,12 +41,14 @@
 
 <script>
 import { orderService } from "../../../services/orderService";
-import OrderDetails from './OrderDetails.vue';
+import OrderDetails from "./OrderDetails.vue";
+import OrderFilterContainer from './OrderFilter/OrderFilterContainer.vue';
 import OrderPreview from "./OrderPreview.vue";
 export default {
   components: {
     OrderPreview,
     OrderDetails,
+    OrderFilterContainer,
   },
   data() {
     return {
@@ -51,15 +56,16 @@ export default {
       isLoading: false,
       page: 1,
       length: 1,
+      query: [],
     };
   },
   async created() {
-    this.getOrders(1);
+    this.getOrders(this.page);
   },
   methods: {
     async getOrders(page) {
       this.isLoading = true;
-      const res = await orderService.getOrders(page);
+      const res = await orderService.getOrders(page, this.query);
       this.orders = res.orders;
       this.length = Math.ceil(res.totalLength / 10);
       this.isLoading = false;
@@ -67,13 +73,18 @@ export default {
     onSwitchPage(page) {
       this.getOrders(page);
     },
+    onUpdateQuery(query) {
+      this.query = query
+      console.log(query)
+      this.getOrders()
+    }
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .order-preview-list-container {
-    padding: 1rem;
+  padding: 1rem;
 }
 
 .loader {

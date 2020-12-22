@@ -6,10 +6,12 @@
         v-model="filterBy"
         @input="shouldOpen"
       />
-      <div class="dropdown-arrow-container" v-bind:class="{'upside-down':isDropDownOpen}" @click="toggleDropdown">
-          <v-icon>
-              mdi-chevron-down
-          </v-icon>
+      <div
+        class="dropdown-arrow-container"
+        v-bind:class="{ 'upside-down': isDropDownOpen }"
+        @click="toggleDropdown"
+      >
+        <v-icon> mdi-chevron-down </v-icon>
       </div>
     </div>
     <div v-if="isDropDownOpen" class="selection-dropdown">
@@ -22,8 +24,11 @@
         </li>
       </ul>
       <div v-if="!items.length" class="empty-state-container">
-          <div v-if="filterBy">Looks like there are no items with that name. try revising your search.</div>
-          <div v-if="!filterBy">Try searching for a product</div>
+        <div v-if="filterBy">
+          Looks like there are no items with that name. try revising your
+          search.
+        </div>
+        <div v-if="!filterBy">Try searching for a product</div>
       </div>
     </div>
   </div>
@@ -32,6 +37,7 @@
 <script>
 import ProductImage from "../../GlobalCmps/ProductImage.vue";
 export default {
+  props: ["shouldOnlyEmit"],
   components: { ProductImage },
   data() {
     return {
@@ -57,11 +63,16 @@ export default {
       }
     },
     onClickItem(itemId) {
-      this.$router.push(`/add?editid=${itemId}`);
+      if (this.shouldOnlyEmit) {
+        this.$emit("selected-item", itemId);
+        this.isDropDownOpen = false;
+      } else {
+        this.$router.push(`/add?editid=${itemId}`);
+      }
     },
     toggleDropdown() {
-        this.isDropDownOpen = !this.isDropDownOpen
-    }
+      this.isDropDownOpen = !this.isDropDownOpen;
+    },
   },
 };
 </script>
@@ -73,17 +84,17 @@ export default {
 }
 
 .search-container {
-    position: relative;
-    .dropdown-arrow-container {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-        transition: 0.3s;
-        cursor: pointer;
-    }
-    .upside-down {
-        transform: rotate(180deg);
-    }
+  position: relative;
+  .dropdown-arrow-container {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+  .upside-down {
+    transform: rotate(180deg);
+  }
 }
 .selection-dropdown {
   position: absolute;
@@ -121,7 +132,7 @@ export default {
 }
 
 .empty-state-container {
-    padding: 1rem 0.5rem;
+  padding: 1rem 0.5rem;
 }
 
 input {

@@ -8,14 +8,14 @@
         <div class="title">
           {{ cartItem.title }}
         </div>
-        <div class="price">${{ cartItem.price }}</div>
+        <div class="price"><price-container :price="cartItem.price" /></div>
       </div>
       <div class="center">
         <ul>
           <li v-for="extra in cartItem.extras" :key="extra.id">
             <div class="extra">
               {{ extra.title }}
-              ${{ extra.price }}
+              <price-container :price="extra.price" />
             </div>
           </li>
         </ul>
@@ -39,10 +39,12 @@
 </template>
 
 <script>
+import PriceContainer from '../../GlobalCmps/PriceContainer.vue';
 import ProductImage from "../../GlobalCmps/ProductImage.vue";
 import AmountModifier from "../AmountModifier.vue";
+
 export default {
-  components: { ProductImage, AmountModifier },
+  components: { ProductImage, AmountModifier, PriceContainer },
   props: ["cartItem"],
   methods: {
     onChangeAmount(amount) {

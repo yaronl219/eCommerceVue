@@ -9,8 +9,6 @@
     >
     
       <v-list-item>
-
-    
           <v-icon >mdi-menu</v-icon>
         <v-btn
           icon

@@ -53,6 +53,8 @@ ul {
   padding: 1rem;
   li {
     margin-right: 2rem;
+    display: flex;
+    align-items: center;
   }
 }
 

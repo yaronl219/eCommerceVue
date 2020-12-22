@@ -12,7 +12,7 @@
             <div>
               {{ item.description }}
             </div>
-            <div>${{ calculatedPrice }}</div>
+            <div><price-container :price="calculatedPrice" /></div>
           </v-card-text>
           <div class="amount-container">
             <amount-modifier
@@ -48,6 +48,7 @@
 </template>
 
 <script>
+import PriceContainer from '../../components/GlobalCmps/PriceContainer.vue';
 import ProductImage from "../../components/GlobalCmps/ProductImage.vue";
 import AmountModifier from "../../components/StoreFrontView/AmountModifier.vue";
 import ExtraFeatureList from "../../components/StoreFrontView/ExtraFeaturesCmps/ExtraFeatureList.vue";
@@ -55,7 +56,7 @@ import { itemService } from "../../services/itemService";
 import { utilService } from "../../services/utilService";
 
 export default {
-  components: { ProductImage, ExtraFeatureList, AmountModifier },
+  components: { ProductImage, ExtraFeatureList, AmountModifier, PriceContainer },
   data() {
     return {
       item: null,

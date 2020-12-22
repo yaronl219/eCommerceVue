@@ -7,13 +7,15 @@
       <div class="product-title">
         {{ extra.title }}
       </div>
-      <div v-if="extra.price">${{ extra.price }}</div>
+      <div v-if="extra.price"><price-container :price="extra.price" /></div>
     </div>
   </li>
 </template>
 
 <script>
+import PriceContainer from '../../GlobalCmps/PriceContainer.vue';
 export default {
+  components: { PriceContainer },
   props: ["isEditable", "extra", "addedExtras"],
   data() {
     return {

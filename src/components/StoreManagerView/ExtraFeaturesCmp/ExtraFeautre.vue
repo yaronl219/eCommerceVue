@@ -12,7 +12,7 @@
       </div>
     </div>
     <div v-if="includePrice" class="price-container">
-      <div v-if="!isEditingPrice" @click="onToggleEditPrice">${{ price }}</div>
+      <div v-if="!isEditingPrice" @click="onToggleEditPrice"><price-container :price="price" /></div>
       <div v-if="isEditingPrice">
         <input
           type="number"
@@ -29,7 +29,9 @@
 </template>
 
 <script>
+import PriceContainer from '../../GlobalCmps/PriceContainer.vue';
 export default {
+  components: { PriceContainer },
   props: ["extra", "includePrice"],
   created() {
     this.title = this.extra.title;

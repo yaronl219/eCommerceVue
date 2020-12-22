@@ -91,7 +91,7 @@ export default {
 @media screen and (max-width: 600px){
     .category-container {
         
-        padding: 2rem 0.5rem;
+        padding: 2rem 0 0;
     }
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <v-app-bar app id="nav">
     <div class="logo-container">
-      <h1>myShop</h1>
+      <router-link to="/"><h1>myShop</h1></router-link>
     </div>
     <div class="nav-links">
       <router-link to="/">Home</router-link> |
@@ -41,7 +41,10 @@ export default {
 
 .logo-container {
   flex-grow: 1;
-  font-size: 0.75rem;
+  font-size: 0.75rem; 
+  a {
+    text-decoration: none;
+  }
 }
 
 .nav-links {

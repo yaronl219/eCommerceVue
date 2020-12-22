@@ -45,8 +45,8 @@ export default {
   overflow: hidden;
   div {
     flex-grow: 1;
-    background-size: cover;
-    background-position: center;
+    background-size: contain;
+    background-position: top center;
   }
 }
 

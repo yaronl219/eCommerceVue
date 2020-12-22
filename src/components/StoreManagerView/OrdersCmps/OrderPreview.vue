@@ -16,7 +16,7 @@
           <v-icon>
               mdi-currency-usd
           </v-icon>
-          ${{order.totalPrice}}
+          <price-container :price="order.totalPrice" />
       </div>
             <div class="price">
           <v-icon>
@@ -29,10 +29,13 @@
 
 <script>
 import { utilService } from '../../../services/utilService';
+import PriceContainer from '../../GlobalCmps/PriceContainer.vue';
 export default {
   props: ["order"],
+  components: {PriceContainer},
   computed: {
-      createdAt() {
+     
+     createdAt() {
           return utilService.parseTimestamp(this.order.createdAt)
       }
   }
@@ -41,8 +44,7 @@ export default {
 
 <style scoped>
 .order-preview-container {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(10rem, 1fr));
 }
 </style>

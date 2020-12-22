@@ -5,6 +5,7 @@
         <v-card>
           <div class="img-container">
             <product-image :imgUrl="item.img" />
+            <on-sale-ribbon v-if="item.onSale"/>
           </div>
           <!-- add amount here later -->
           <v-card-title>{{ item.title }}</v-card-title>
@@ -31,10 +32,12 @@
       >
         <v-card>
           <extra-feature-list
+          v-if="item.features.length"
             :extras="item.features"
             title="Product Features"
           />
           <extra-feature-list
+          v-if="item.extras.length"
             title="Paid Extras"
             :extras="item.extras"
             :addedExtras="cartItem.extras"
@@ -44,6 +47,7 @@
         </v-card>
       </div>
     </div>
+    
   </v-main>
 </template>
 
@@ -52,11 +56,12 @@ import PriceContainer from '../../components/GlobalCmps/PriceContainer.vue';
 import ProductImage from "../../components/GlobalCmps/ProductImage.vue";
 import AmountModifier from "../../components/StoreFrontView/AmountModifier.vue";
 import ExtraFeatureList from "../../components/StoreFrontView/ExtraFeaturesCmps/ExtraFeatureList.vue";
+import OnSaleRibbon from '../../components/StoreFrontView/GlobalCmps/OnSaleRibbon.vue';
 import { itemService } from "../../services/itemService";
 import { utilService } from "../../services/utilService";
 
 export default {
-  components: { ProductImage, ExtraFeatureList, AmountModifier, PriceContainer },
+  components: { ProductImage, ExtraFeatureList, AmountModifier, PriceContainer, OnSaleRibbon },
   data() {
     return {
       item: null,
@@ -143,10 +148,20 @@ export default {
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2rem;
   transition: 0.2s;
+  justify-items:center;
+  // align-items: center;
 }
 .img-container {
   height: 15rem;
+  position: relative;
 }
+
+.left,
+.right {
+  max-width: 20rem;
+  width: 100%;
+}
+
 .add-to-cart-btn-container {
   display: flex;
   justify-content: center;

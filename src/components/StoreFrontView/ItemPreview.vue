@@ -2,6 +2,7 @@
   <v-card @click="onClickItem">
     <div class="img-container">
       <product-image :imgUrl="item.img" />
+      <on-sale-ribbon v-if="item.onSale"/>
     </div>
     <div class="top">
       <div class="title">
@@ -22,9 +23,10 @@
 <script>
 import PriceContainer from "../GlobalCmps/PriceContainer.vue";
 import ProductImage from "../GlobalCmps/ProductImage.vue";
+import OnSaleRibbon from "./GlobalCmps/OnSaleRibbon.vue";
 
 export default {
-  components: { ProductImage, PriceContainer },
+  components: { ProductImage, PriceContainer, OnSaleRibbon },
   props: ["item"],
   computed: {
     shortDescription() {
@@ -47,6 +49,7 @@ export default {
 <style lang="scss" scoped>
 .img-container {
   height: 15rem;
+  position: relative;
 }
 
 .top {

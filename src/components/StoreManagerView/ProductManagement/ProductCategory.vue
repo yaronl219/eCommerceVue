@@ -64,8 +64,6 @@ export default {
 }
 
 @media screen and (max-width:600px){
-    .expansion-panel {
-        // padding: -0.5rem;
-    }
+
 }
 </style>

@@ -17,8 +17,12 @@ export default {
   props: ["category"],
   mounted: function () {
     this.$nextTick(function () {
-      const yPos = this.$refs.categoryRef.offsetTop
-      this.$store.dispatch({type:'setPosition', categoryId:this.category._id, yPos})
+      const yPos = this.$refs.categoryRef.offsetTop;
+      this.$store.dispatch({
+        type: "setPosition",
+        categoryId: this.category._id,
+        yPos,
+      });
     });
   },
   computed: {

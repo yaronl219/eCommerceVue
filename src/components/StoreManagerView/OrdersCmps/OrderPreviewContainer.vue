@@ -75,7 +75,6 @@ export default {
     },
     onUpdateQuery(query) {
       this.query = query
-      console.log(query)
       this.getOrders()
     }
   },

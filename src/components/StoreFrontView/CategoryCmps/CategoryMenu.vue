@@ -28,7 +28,7 @@ export default {
   props: ["isVertical", "windowWidth"],
   computed: {
     categories() {
-      return this.$store.getters.storeCategories;
+      return this.$store.getters.storeCategories.filter(category => category.isVisible);
     },
   },
   methods: {},
@@ -45,6 +45,12 @@ ul {
   list-style: none;
 }
 
+
+li {
+  font-weight: 500;
+  cursor: pointer;
+  margin: 1.5rem 0rem;
+}
 .horizontal {
   margin: 0px;
   padding: 0px;
@@ -58,8 +64,5 @@ ul {
   }
 }
 
-li {
-  cursor: pointer;
-  margin: 1.5rem 0rem;
-}
+
 </style>

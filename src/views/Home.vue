@@ -23,6 +23,7 @@
               You can check out my portfolio
               <a href="https://yaronl219.github.io/portfolio">here</a>
             </p>
+            <p>If you'd like to see the repository for this project on Github, you can check it out <a href="https://github.com/yaronl219/eCommerceVue">here</a></p>
           </v-card-text>
         </div>
       </v-card>

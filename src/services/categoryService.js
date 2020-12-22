@@ -4,7 +4,8 @@ export const categoryService = {
     addCategory,
     reOrderCategories,
     removeCategory,
-    renameCategory
+    updateCategory,
+    getCategories
 }
 
 
@@ -26,10 +27,19 @@ async function removeCategory(categoryId) {
     }
 }
 
-async function renameCategory(categoryId,categoryName) {
+async function updateCategory(categoryId,categoryName,isVisible) {
     try {
-        const res = await httpService.put('category', {categoryId,categoryName})
+        const res = await httpService.put('category', {categoryId,categoryName, isVisible})
         return res
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+async function getCategories() {
+    try {
+        const categories = await httpService.get('category')
+        return categories
     } catch (err) {
         console.log(err)
     }

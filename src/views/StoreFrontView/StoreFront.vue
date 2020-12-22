@@ -8,8 +8,10 @@
     <div class="store-front-container-page">
       <category-menu-container />
       <div class="category-container">
+        <category-empty-state v-if="!categories.length" />
         <category-preview
-          v-for="category in $store.getters.storeCategories"
+          
+          v-for="category in categories"
           :key="category._id"
           :category="category"
         />
@@ -23,6 +25,7 @@
 <script>
 import CartDrawer from "../../components/StoreFrontView/CartCmps/CartDrawer.vue";
 import CartRefillPrompt from "../../components/StoreFrontView/CartCmps/CartRefillPrompt.vue";
+import CategoryEmptyState from "../../components/StoreFrontView/CategoryCmps/CategoryEmptyState.vue";
 import CategoryMenuContainer from "../../components/StoreFrontView/CategoryCmps/CategoryMenuContainer.vue";
 import CategoryPreview from "../../components/StoreFrontView/CategoryCmps/CategoryPreview.vue";
 
@@ -33,6 +36,7 @@ export default {
     CartRefillPrompt,
     CategoryPreview,
     CategoryMenuContainer,
+    CategoryEmptyState,
   },
   data() {
     return {
@@ -73,6 +77,12 @@ export default {
     isCartOpen() {
       return this.$store.getters.isCartOpen;
     },
+    categories() {
+      if (!this.$store.getters.storeCategories) return [];
+      return this.$store.getters.storeCategories.filter(
+        (category) => category.isVisible
+      );
+    },
   },
 };
 </script>
@@ -88,10 +98,9 @@ export default {
   padding: 1rem;
 }
 
-@media screen and (max-width: 600px){
-    .category-container {
-        
-        padding: 2rem 0 0;
-    }
+@media screen and (max-width: 600px) {
+  .category-container {
+    padding: 2rem 0 0;
+  }
 }
 </style>

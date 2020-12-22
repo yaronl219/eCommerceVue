@@ -10,6 +10,10 @@
       <div class="title-container">
         {{ categoryName }}
       </div>
+      <div @click.stop="onClickVisibilty">
+        <v-icon v-if="category.isVisible"> mdi-eye </v-icon>
+        <v-icon v-if="!category.isVisible"> mdi-eye-off </v-icon>
+      </div>
       <v-icon @click.stop="onClickEdit"> mdi-pencil </v-icon>
       <v-icon @click.stop="onClickDelete"> mdi-delete </v-icon>
     </div>
@@ -51,9 +55,15 @@ export default {
     onClickDelete() {
       this.isDeleteModalOpen = true;
     },
+    onClickVisibilty() {
+      this.$store.dispatch({type:'toggleVisibilty',categoryId:this.category._id})
+    },
     onDeleteCategory() {
-        this.$store.dispatch({type:'removeCategory',categoryId:this.category._id})
-        this.isDeleteModalOpen = false
+      this.$store.dispatch({
+        type: "removeCategory",
+        categoryId: this.category._id,
+      });
+      this.isDeleteModalOpen = false;
     },
     onSaveName() {
       this.isEditing = false;

@@ -87,7 +87,15 @@ export default {
                 if (currItem._id === item._id) return item
                 return currItem
             })
+        },
+        async toggleVisibilty(state,{categoryId}) {
+            const categories = [...state.storeCategories]
+            const category = categories.find(category => category._id === categoryId)
+            category.isVisible = !category.isVisible
+            state.storeCategories = categories
+            categoryService.updateCategory(category._id,category.title,category.isVisible)
         }
+
         
     },
     actions: {
@@ -135,12 +143,15 @@ export default {
         },
         async renameCategory(context, {categoryId,categoryName}) {
             context.commit({type: 'renameCategory',categoryId,categoryName})
-            await categoryService.renameCategory(categoryId,categoryName)
+            await categoryService.updateCategory(categoryId,categoryName)
         },
         async removeCategory(context, {categoryId}) {
             context.commit({type: 'removeCategory', categoryId})
             await categoryService.removeCategory(categoryId)
         },
+        async toggleVisibilty(context, {categoryId}) {
+            context.commit({type: 'toggleVisibilty', categoryId})
+        }
 
 
     }

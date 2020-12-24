@@ -1,7 +1,7 @@
 <template>
   <div class="cart-items-list">
     <div v-if="!itemsInCart.length" class="empty-state-container">
-      <!--TODO: add empty state  -->
+      <cart-empty />
     </div>
     <div class="cart-items-container">
       <ul>
@@ -15,9 +15,10 @@
 </template>
 
 <script>
+import CartEmpty from './CartEmpty.vue';
 import CartItem from './CartItem.vue';
 export default {
-  components: { CartItem },
+  components: { CartItem, CartEmpty },
   computed: {
     itemsInCart() {
       return this.$store.getters.itemsInCart;
@@ -27,6 +28,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.cart-items-list {
+  height: 100%;
+  min-height: 75vh;
+}
+
 ul {
   margin: 0px;
   padding: 0px;

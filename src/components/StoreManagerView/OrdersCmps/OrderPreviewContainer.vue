@@ -1,6 +1,7 @@
 <template>
   <div class="order-preview-list-container">
     <v-card-title>Received Orders</v-card-title>
+    <h4>Filter Orders</h4>
     <order-filter-container @update-filter="onUpdateQuery" />
     <div v-if="isLoading" class="loader">
       <v-progress-circular
@@ -12,8 +13,6 @@
     </div>
 
     <div v-if="!isLoading" class="orders-preview-container">
-      
-      
       <v-expansion-panels>
         <v-expansion-panel v-for="order in orders" :key="order._id">
           <v-expansion-panel-header>
@@ -42,7 +41,7 @@
 <script>
 import { orderService } from "../../../services/orderService";
 import OrderDetails from "./OrderDetails.vue";
-import OrderFilterContainer from './OrderFilter/OrderFilterContainer.vue';
+import OrderFilterContainer from "./OrderFilter/OrderFilterContainer.vue";
 import OrderPreview from "./OrderPreview.vue";
 export default {
   components: {
@@ -74,9 +73,9 @@ export default {
       this.getOrders(page);
     },
     onUpdateQuery(query) {
-      this.query = query
-      this.getOrders()
-    }
+      this.query = query;
+      this.getOrders();
+    },
   },
 };
 </script>
@@ -85,7 +84,9 @@ export default {
 .order-preview-list-container {
   padding: 1rem;
 }
-
+h4 {
+  padding: 0 1rem;
+}
 .loader {
   display: flex;
   justify-content: center;

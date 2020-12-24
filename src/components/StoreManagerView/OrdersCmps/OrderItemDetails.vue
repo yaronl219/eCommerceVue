@@ -14,7 +14,7 @@
           <!-- <order-item-table-row v-for="(item, index) in orderItems" :key="index + item.id" :orderItem="item" :index="index" /> -->
           <tr v-for="item in orderItems" :key="item.key" v-bind:class="{'item-row':item.isItem, 'extra-row':!item.isItem}">
             <td class="idx">{{ item.index }}</td>
-            <td class="table-title">{{ item.title }}</td>
+            <td class="text-left table-title">{{ item.title }}</td>
             <td class="amount">{{ item.amount }}</td>
             <td class="price"><price-container :price="item.price" /></td>
           </tr>
@@ -82,5 +82,10 @@ tr {
 .extra-row {
     background-color: rgba(0,0,0,0.1);
     text-indent: 1.5rem;
+}
+
+.table-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="order-details-container">
     <div class="general-details">
-      <div class="contact-details">
+      <div class="contact-details" v-if="!removeContactDetails">
         <h3>Personal Details</h3>
         <ul>
           <li>
@@ -51,7 +51,7 @@
 import OrderItemDetails from './OrderItemDetails.vue';
 export default {
   components: { OrderItemDetails },
-  props: ["order"],
+  props: ["order",'removeContactDetails'],
 };
 </script>
 

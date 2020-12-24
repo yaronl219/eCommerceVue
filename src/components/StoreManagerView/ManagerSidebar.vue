@@ -49,6 +49,7 @@
         items: [
           { title: 'Products', icon: 'mdi-cube', path:'/products' },
           { title: 'Orders', icon: 'mdi-format-list-checkbox', path: '/orders' },
+          { title: 'Users', icon: 'mdi-account-outline', path: '/users' },
           { title: 'Graphs', icon: 'mdi-chart-areaspline-variant', path: '/graphs' },
         ],
         mini: true,

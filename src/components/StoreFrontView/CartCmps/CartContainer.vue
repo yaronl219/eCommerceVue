@@ -41,6 +41,7 @@ export default {
 .cart-items-container {
   padding: 1.5rem 0 3.25rem;
   overflow: scroll;
+  min-height: 100%;
 }
 
 .cart-sum-container {

@@ -23,6 +23,11 @@ const routes = [
         component: () => import('../components/StoreManagerView/OrdersCmps/OrderPreviewContainer.vue')
       },
       {
+        path: 'users',
+        name: 'Users',
+        component: () => import('../components/StoreManagerView/Users/UserContainer')
+      },
+      {
         path: 'graphs',
         name: 'Graphs',
         component: () => import('../components/StoreManagerView/Graphs/GraphContainer.vue')

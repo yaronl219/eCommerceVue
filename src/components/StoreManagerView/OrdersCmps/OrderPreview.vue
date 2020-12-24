@@ -1,12 +1,12 @@
 <template>
   <div class="order-preview-container">
-      <div class="phone">
+      <div class="phone" v-if="!noPersonalDetails">
           <v-icon>
               mdi-phone
           </v-icon>
           {{order.contactDetails.phoneNumber}}
       </div>
-      <div class="name">
+      <div class="name" v-if="!noPersonalDetails">
           <v-icon>
               mdi-account-outline
           </v-icon>
@@ -31,7 +31,7 @@
 import { utilService } from '../../../services/utilService';
 import PriceContainer from '../../GlobalCmps/PriceContainer.vue';
 export default {
-  props: ["order"],
+  props: ["order", 'noPersonalDetails'],
   components: {PriceContainer},
   computed: {
      

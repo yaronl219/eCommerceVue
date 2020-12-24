@@ -1,7 +1,8 @@
 export const utilService = {
     makeId,
     parseTimestamp,
-    getRandomInteger
+    getRandomInteger,
+    buildSearchParam
 }
 
 function makeId(length = 12) {
@@ -20,4 +21,17 @@ function getRandomInteger(min,max) {
 function parseTimestamp(timestamp) {
     const parsedTime = new Date(timestamp)
     return parsedTime.toLocaleString()
+}
+
+function buildSearchParam(baseQuery,query) {
+    const searchParam = new URLSearchParams()
+    searchParam.append('query',baseQuery)
+    query.forEach(param => {
+        if (Object.values(param)[0]) {
+            const key = Object.keys(param)[0]
+            const value = Object.values(param)[0]
+            searchParam.append(key,value)
+        }
+    });
+    return searchParam
 }

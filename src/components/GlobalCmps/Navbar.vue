@@ -9,9 +9,10 @@
       <router-link to="/store">Store</router-link>
       <div
         class="cart-icon-container"
+        v-if="isStore"
         v-bind:class="{ 'cart-open': $store.getters.isCartOpen }"
       >
-        <v-icon v-if="isStore" @click="onClickCart">mdi-cart</v-icon>
+        <v-icon  @click="onClickCart">mdi-cart</v-icon>
       </div>
     </div>
   </v-app-bar>

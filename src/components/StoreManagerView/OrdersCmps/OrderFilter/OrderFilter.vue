@@ -1,6 +1,6 @@
 <template>
 <div>
-    <h4>Filter Orders</h4>
+    
   <div class="filters-container" v-if="$store.getters.itemsToDisplay">
     
     <div class="icon-container">

@@ -4,8 +4,8 @@ export const orderService = {
     getOrders
 }
 
-async function getOrders(page,query) {
-    const itemsPerPage = 10
+async function getOrders(page,query,itemsPerPage =10) {
+    
     const searchParam = new URLSearchParams()
     searchParam.append('page',page)
     searchParam.append('limit',itemsPerPage)
@@ -24,3 +24,4 @@ async function getOrders(page,query) {
     }
 
 }
+

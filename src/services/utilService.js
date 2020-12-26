@@ -2,7 +2,8 @@ export const utilService = {
     makeId,
     parseTimestamp,
     getRandomInteger,
-    buildSearchParam
+    buildSearchParam,
+    getRandomColor
 }
 
 function makeId(length = 12) {
@@ -34,4 +35,12 @@ function buildSearchParam(baseQuery,query) {
         }
     });
     return searchParam
+}
+
+function getRandomColor(alpha) {
+    let randomColorArr = []
+    for (let i=0; i<3; i++) {
+        randomColorArr.push(getRandomInteger(0,255))
+    }
+    return `rgb(${randomColorArr.join(',')},${alpha})`
 }

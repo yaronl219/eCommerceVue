@@ -12,8 +12,13 @@ const routes = [
     component: () => import('../views/ManagerView/StoreManager.vue'),
     children: [
       {
-        path: 'products',
+        path: 'mobile',
         alias: '/',
+        name: 'Mobile Warning',
+        component: () => import('../components/StoreManagerView/MobileWarning.vue')
+      },
+      {
+        path: 'products',
         name: 'Products',
         component: () => import('../components/StoreManagerView/ProductManagement/ProductManagement.vue')
       },

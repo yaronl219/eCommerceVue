@@ -1,23 +1,25 @@
 <template>
   <v-card>
+    <div class="slot-container">
       <v-card-title>
-          {{title}}
+        {{ title }}
       </v-card-title>
       <slot></slot>
+    </div>
   </v-card>
 </template>
 
 <script>
-import {chartService} from '@/services/chartService.js'
-
 export default {
-    props: ['title'],
-    created() {
-        chartService.getChartData('users')
-    }
-}
+  props: ["title"],
+};
 </script>
 
-<style>
-
+<style scoped>
+.slot-container {
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 </style>

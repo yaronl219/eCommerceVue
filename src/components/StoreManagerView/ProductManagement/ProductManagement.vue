@@ -1,8 +1,9 @@
 <template>
   <div class="product-management-view-container management-main-view">
+    <v-card-title> Product Catalog</v-card-title>
     <text-filter />
     <div class="items-container">
-        <h2>Catalog</h2>
+        
         <product-categoris-container />
     </div>
   </div>

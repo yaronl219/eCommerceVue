@@ -73,7 +73,7 @@ export default {
             context.commit({ type: 'addItemToCart', item })
         },
         removeItemFromCart(context, { itemId }) {
-            console.log(itemId)
+            
             context.commit({ type: 'removeItemFromCart', itemId })
         },
         toggleCartOpen(context) {

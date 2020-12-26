@@ -30,7 +30,7 @@ export default {
 <style lang="scss" scoped>
 .cart-items-list {
   height: 100%;
-  min-height: 75vh;
+  // min-height: 75vh;
 }
 
 ul {

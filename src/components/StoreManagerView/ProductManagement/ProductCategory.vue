@@ -36,15 +36,7 @@ export default {
         futureIndex,
         categoryId: this.category._id,
       });
-    //   this.sortDisplay();
     },
-    // sortDisplay() {
-    //   const sortedItems = this.$store.getters
-    //     .itemsByCategory(this.category._id)
-    //     .sort((a, b) => a.index - b.index);
-    //   this.items = null;
-    //   this.items = sortedItems;
-    // },
     onClickAddItem() {
       this.$router.push(`/add?categoryid=${this.category._id}`);
     },

@@ -77,7 +77,7 @@ export default {
           paymentOption.cvv
           
         ) {
-            console.log('g')
+            
           this.$store.dispatch({type:'setPaymentDetails', paymentDetails: paymentOption})
         } else {
           this.$store.dispatch({type:'setPaymentDetails', paymentDetails :null})

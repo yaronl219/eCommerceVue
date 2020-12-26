@@ -1,6 +1,12 @@
 <template>
   <v-main>
     <div class="checkout-screen-container">
+      <div class="go-back-container">
+        <v-btn x-small @click="onGoBack">
+          <v-icon> mdi-chevron-left </v-icon>
+          Back To Catalog
+        </v-btn>
+      </div>
       <div class="layout-container">
         <div class="left">
           <contact-details />
@@ -68,6 +74,9 @@ export default {
       this.$store.dispatch({ type: "sendOrder", order });
       this.$router.push("/complete");
     },
+    onGoBack() {
+      this.$router.push('/store')
+    }
   },
 };
 </script>
@@ -76,8 +85,15 @@ export default {
 .checkout-screen-container {
   padding: 1.5rem 1.5rem 5rem;
   display: flex;
+  flex-direction: column;
+  // align-items: center;
   justify-content: center;
 }
+
+.go-back-container {
+  padding-bottom: 0.5rem;
+}
+
 .layout-container {
   width: 100%;
   display: grid;

@@ -40,7 +40,6 @@ async function getItems() {
 async function getItem(itemId) {
     try {
         const item = await httpService.get(`item/${itemId}`)
-        console.log(item)
         return item[0]
     } catch (err) {
         console.log(err)
@@ -50,7 +49,6 @@ async function getItem(itemId) {
 async function updateItem(item) {
     try {
         const updatedItem = await httpService.put('item', item)
-        console.log(updatedItem)
         return updatedItem
     } catch (err) {
         console.log(err)

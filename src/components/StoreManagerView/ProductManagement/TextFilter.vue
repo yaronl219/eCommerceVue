@@ -17,7 +17,7 @@
     <div v-if="isDropDownOpen" class="selection-dropdown">
       <ul v-if="items.length">
         <li v-for="item of items" :key="item._id">
-          <div class="autocomplete-item" @click="() => onClickItem(item._id)">
+          <div class="autocomplete-item" @click="() => onClickItem(item._id,item.title)">
             <product-image :imgUrl="item.img" />
             <div class="item-title">{{ item.title }}</div>
           </div>
@@ -62,9 +62,10 @@ export default {
         this.isDropDownOpen = false;
       }
     },
-    onClickItem(itemId) {
+    onClickItem(itemId,itemTitle) {
       if (this.shouldOnlyEmit) {
         this.$emit("selected-item", itemId);
+        this.filterBy = itemTitle
         this.isDropDownOpen = false;
       } else {
         this.$router.push(`/add?editid=${itemId}`);

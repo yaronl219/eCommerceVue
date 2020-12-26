@@ -185,7 +185,8 @@ export default {
       this.isDeleteItemModalOpen = true;
     },
     onDeleteFeature(featureId) {
-      console.log(featureId, this.item.features);
+      
+      
       this.item.features = this.item.features.filter(
         (feature) => feature.id !== featureId
       );

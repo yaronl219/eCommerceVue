@@ -67,7 +67,7 @@ export default {
       this.isRefillCartModalOpen = false;
     },
     onForgetOrder() {
-      console.log("forget");
+      
       this.$store.dispatch({ type: "emptyCart" });
       cartService.forgetSavedCart();
       this.isRefillCartModalOpen = false;

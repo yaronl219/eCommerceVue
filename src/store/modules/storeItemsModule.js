@@ -138,7 +138,7 @@ export default {
         async addCategory(context, { categoryTitle }) {
             const categoryObj = { title: categoryTitle, isVisible: true }
             const category  = await categoryService.addCategory(categoryObj)
-            console.log(category)
+        
             context.commit({ type: 'addCategory', category })
         },
         async renameCategory(context, {categoryId,categoryName}) {

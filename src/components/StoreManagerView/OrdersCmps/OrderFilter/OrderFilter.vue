@@ -138,9 +138,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  h4 {
-      padding: 0 1rem;
-  }
+
 
 .filters-container {
   display: grid;

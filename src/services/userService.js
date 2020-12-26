@@ -8,7 +8,6 @@ export const userService = {
 }
 
 async function getUsers(page,query = []) {
-    console.log(page)
     try {  
         const searchParam = utilService.buildSearchParam('users',query)
         const data = await httpService.get(`order/query?${searchParam.toString()}&page=${page}`)

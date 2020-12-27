@@ -9,14 +9,12 @@
               myShop was built as a project to better master Vue.js and
               simulates an e-commerce webshop.
             </p>
-            <p>The frontend is Vue.js with vuetify</p>
-            <p>The backend is built with node.js and mongoDB as a database</p>
             <p>
               You can add or remove item in the "Store manager" view, and create
               orders in the "Store" view
             </p>
-            <p>The graphs and statistics section will come soon</p>
-
+            <h3>Want to know more?</h3>
+            <a href='/geek'>Read the technical details</a>
             <h3>About me</h3>
             <p>I'm a fresh full stack developer seeking a new challenge</p>
             <p>

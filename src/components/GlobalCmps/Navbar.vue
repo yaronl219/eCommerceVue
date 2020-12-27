@@ -12,7 +12,9 @@
         v-if="isStore"
         v-bind:class="{ 'cart-open': $store.getters.isCartOpen }"
       >
+      <v-badge :content="$store.getters.itemsInCart.length" :value="!!$store.getters.itemsInCart.length" overlap>
         <v-icon  @click="onClickCart">mdi-cart</v-icon>
+      </v-badge>
       </div>
     </div>
   </v-app-bar>

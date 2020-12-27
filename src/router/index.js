@@ -71,6 +71,11 @@ const routes = [
     component: () => import('../views/StoreFrontView/OrderComplete.vue'),
   },
   {
+    path: '/geek',
+    name: 'Geek About',
+    component: () => import('../views/About.vue'),
+  },
+  {
     path: '*',
     name: 'Home',
     component: Home
